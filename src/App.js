@@ -18,8 +18,11 @@ class App extends Component {
     this.setState({ userGuessedNumber: number.target.value });
   };
   checkTheGuess = number => {
-    if (this.state.numberOfTrying > 1) {
-      if (this.state.userGuessedNumber === null) {
+    if (this.state.numberOfTrying > 0) {
+      if (
+        this.state.userGuessedNumber === null ||
+        this.state.userGuessedNumber === ""
+      ) {
         this.setState({ guessingResponse: "Type a number between 0 - 100" });
         this.setState({ buttonValue: "Try again!" });
       } else if (this.state.userGuessedNumber > this.state.randomNumber) {
@@ -27,14 +30,16 @@ class App extends Component {
         let countDown = this.state.numberOfTrying - 1;
         this.setState({ numberOfTrying: countDown });
         this.setState({ buttonValue: "Try again!" });
+        this.setState({ userGuessedNumber: "" });
       } else if (this.state.userGuessedNumber < this.state.randomNumber) {
         let countDown = this.state.numberOfTrying - 1;
         this.setState({ numberOfTrying: countDown });
         this.setState({ guessingResponse: "Go Up" });
         this.setState({ buttonValue: "Try again!" });
+        this.setState({ userGuessedNumber: "" });
       } else {
         this.setState({ randomNumber: Math.floor(Math.random() * 101) });
-        this.setState({ userGuessedNumber: null });
+        this.setState({ userGuessedNumber: "" });
         this.setState({ numberOfTrying: 5 });
         this.setState({ guessingResponse: "Yes, you won!" });
         this.setState({ buttonValue: "Start Guessing Again!" });
@@ -47,6 +52,7 @@ class App extends Component {
           this.state.randomNumber
         }`
       });
+      this.setState({ userGuessedNumber: "" });
       this.setState({ buttonValue: "Start Guessing Again!" });
     }
   };
@@ -54,12 +60,21 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <h1>Guessing Game</h1>
           <div className="row my-4 justify-content-md-center">
             <div className="col-4 my-3">
               <input
                 type="number"
                 class="form-control"
                 placeholder="Guess number between 0 - 100"
+                min="0"
+                max="100"
                 value={this.state.userGuessedNumber}
                 onChange={this.takeUserGuess}
               />
@@ -83,6 +98,18 @@ class App extends Component {
             </div>
           </div>
         </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     );
   }
